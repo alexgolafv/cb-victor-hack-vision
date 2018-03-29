@@ -20,6 +20,7 @@
   "homepage": "https://github.com/alexgolafv/cb-victor-hack-vision#readme",
   "dependencies": {
     "@slack/client": "^4.1.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.17.1",
     "bootbot": "^1.0.12",
     "botkit": "^0.6.12",
@@ -27,6 +28,8 @@
     "config": "^1.26.1",
     "cosmicjs": "^2.39.0",
     "dotenv": "^4.0.0",
+    "env": "0.0.2",
+    "mongoose": "^5.0.12",
     "node-schedule": "^1.2.1",
     "request": "^2.81.0",
     "when": "^3.7.8"
