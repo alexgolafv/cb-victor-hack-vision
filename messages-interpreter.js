@@ -12,9 +12,10 @@ function createResponse(text){
 }
 
 function processMessage(event) {
-    if (!usersCache[event.user]) usersCache[event.user] = {};
-
-    if(event.text.toLowerCase().indexOf('hello') !== -1){
+    if (!usersCache[event.user]) usersCache[event.user] = {
+        isNameRequested: false
+    };
+    if(event.text.toLowerCase().search(/(hello|goodmorning|hi|hey)/) !== -1){
         return createResponse('Hello there! How you doing?');
     }
 
