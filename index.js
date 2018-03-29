@@ -24,7 +24,7 @@ app.get('/', function(req, res) {
 })
 
 app.get('/webhook/', function(req, res) {
-  if (req.query['hub.verify_token'] === process.env.VERIFY_TOKEN){
+  if (req.query['hub.verify_token'] === 'eb0237dc-259d-4f8b-b369-abe7a1446d0c'){
     return res.send(req.query['hub.challenge'])
   }
   res.send('wrong token')
