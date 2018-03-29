@@ -1,37 +1,19 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const request = require('request')
-const app = express()
-const Cosmic = require('cosmicjs')
-const BootBot = require('bootbot')
-require('dotenv').config()
-const chrono = require('chrono-node')
-var schedule = require('node-schedule')
-const EventEmitter = require('events').EventEmitter
+const { RTMClient }  = require('@slack/client');
 
-var config = {}
+const slack_oauth= 'xoxb-337441105504-URrHFrFXjJJwhmuLZWQRby97';
+const slack_token    = 'xoxp-339213669079-337438635616-338292547413-429725eb274a798decdaa3c9de435059';
 
-const reminders = []
-
-const eventEmitter = new EventEmitter()
-
-app.set('port', (process.env.PORT || 5000))
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
-
-app.get('/', function(req, res) {
-  res.send("hey there boi")
-})
-
-app.get('/webhook/', function(req, res) {
-  if (req.query['hub.verify_token'] === 'eb0237dc-259d-4f8b-b369-abe7a1446d0c'){
-    return res.send(req.query['hub.challenge'])
-  }
-  res.send('wrong token')
-})
-
-app.listen(app.get('port'), function(){
-  console.log('Started on port', app.get('port'))
-})
+const rtm = new RTMClient(slack_token);
+rtm.start();
 
 
+rtm.on('authenticated', (rtmStartData) => {
+    for (const c of rtmStartData.channels) {
+        if (c.is_member && c.name ==='jamiestestchannel') { channel = c.id }
+    }
+    console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}`);
+});
+
+rtm.on('message', function () {
+    rtm.sendMessage("Hello!", channel);
+});
