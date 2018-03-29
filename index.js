@@ -13,7 +13,7 @@ rtm.on('authenticated', (rtmStartData) => {
 });
 
 rtm.on('message', function (event) {
-    return interpreter.processMessage().then((res) => {
+    return interpreter.processMessage(event).then((res) => {
         return rtm.sendMessage(res.text, event.channel).then((res) => {
             console.log('Message sent: ', res.ts);
         })
