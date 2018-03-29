@@ -8,14 +8,11 @@ rtm.start();
 
 let channel;
 rtm.on('authenticated', (rtmStartData) => {
-    for (const c of rtmStartData.channels) {
-        if (c.is_member && c.name ==='general') { channel = c.id }
-    }
     console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
 });
 
-rtm.on('message', function () {
-    rtm.sendMessage("Hello!", conversationId)  .then((res) => {
+rtm.on('message', function (event) {
+    rtm.sendMessage("Hello!", event.channel)  .then((res) => {
         // `res` contains information about the posted message
         console.log('Message sent: ', res.ts);
       })
