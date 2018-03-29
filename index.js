@@ -1,7 +1,8 @@
 const { RTMClient }  = require('@slack/client');
+require('dotenv').config();
+const interpreter = require('./messages-interpreter');
 
-const slack_oauth= 'xoxb-337441105504-URrHFrFXjJJwhmuLZWQRby97';
-const slack_token    = 'xoxp-339213669079-337438635616-338292547413-429725eb274a798decdaa3c9de435059';
+const slack_oauth= process.env.SLACK_OAUTH;
 
 const rtm = new RTMClient(slack_oauth);
 rtm.start();
@@ -12,9 +13,9 @@ rtm.on('authenticated', (rtmStartData) => {
 });
 
 rtm.on('message', function (event) {
-    rtm.sendMessage("Hello!", event.channel)  .then((res) => {
-        // `res` contains information about the posted message
-        console.log('Message sent: ', res.ts);
-      })
-      .catch(console.error);
+    return interpreter.processMessage().then((res) => {
+        return rtm.sendMessage(res.text, event.channel).then((res) => {
+            console.log('Message sent: ', res.ts);
+        })
+    }).catch(console.error);
 });
